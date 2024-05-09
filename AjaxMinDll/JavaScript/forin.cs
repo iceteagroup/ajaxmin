@@ -45,7 +45,9 @@ namespace Microsoft.Ajax.Utilities
 
         public BlockScope BlockScope { get; set; }
 
-        public override Context TerminatingContext
+		public bool IsAwait { get; set; }
+
+		public override Context TerminatingContext
         {
             get
             {

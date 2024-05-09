@@ -1616,6 +1616,15 @@ namespace Microsoft.Ajax.Utilities
                 Output("for");
                 MarkSegment(node, null, node.Context);
                 SetContextOutputPosition(node.Context);
+                
+                if (node.IsAwait)
+                {
+                    if (m_settings.OutputMode == OutputMode.MultipleLines)
+                        OutputPossibleLineBreak(' ');
+                        
+                    Output("await");
+                    MarkSegment(node, null, node.Context);
+                }
 
                 if (m_settings.OutputMode == OutputMode.MultipleLines)
                 {
@@ -1719,6 +1728,11 @@ namespace Microsoft.Ajax.Utilities
         {
             if (node.FunctionType == FunctionType.Method)
             {
+                if (node.IsAsync)
+                {
+                    Output("async");
+                }
+
                 if (node.IsGenerator)
                 {
                     Output('*');
@@ -1740,6 +1754,11 @@ namespace Microsoft.Ajax.Utilities
             }
             else
             {
+                if (node.IsAsync)
+                {
+                    Output("async");
+                }
+
                 Output("function");
                 MarkSegment(node, functionName, node.Context);
                 SetContextOutputPosition(node.Context);
@@ -1762,6 +1781,12 @@ namespace Microsoft.Ajax.Utilities
 
                 if (node.FunctionType == FunctionType.ArrowFunction)
                 {
+                    if (node.IsAsync)
+                        Output("async");
+
+                    if (m_settings.SymbolsMap != null)
+                        m_functionStack.Push("(anonymous)");
+
                     // arrow functions are simple...
                     OutputFunctionArgsAndBody(node);
                 }
@@ -3708,6 +3733,8 @@ namespace Microsoft.Ajax.Utilities
                 case JSToken.BitwiseXor: return "^";
                 case JSToken.LogicalAnd: return "&&";
                 case JSToken.LogicalOr: return "||";
+                case JSToken.NullishCoalesce: return "??";
+                case JSToken.Exponent: return "**";
                 case JSToken.Assign: return "=";
                 case JSToken.BitwiseAndAssign: return "&=";
                 case JSToken.BitwiseOrAssign: return "|=";
@@ -3723,6 +3750,10 @@ namespace Microsoft.Ajax.Utilities
                 case JSToken.LessThan: return "<";
                 case JSToken.LessThanEqual: return "<=";
                 case JSToken.MinusAssign: return "-=";
+                case JSToken.ExponentAssign: return "**=";
+                case JSToken.LogicalAndAssign: return "&&=";
+                case JSToken.LogicalNullishAssign: return "??=";
+                case JSToken.LogicalOrAssign: return "||=";
                 case JSToken.Modulo: return "%";
                 case JSToken.ModuloAssign: return "%=";
                 case JSToken.MultiplyAssign: return "*=";
@@ -3741,6 +3772,7 @@ namespace Microsoft.Ajax.Utilities
                 case JSToken.ArrowFunction: return "=>";
                 case JSToken.RestSpread: return "...";
                 case JSToken.Yield: return "yield";
+                case JSToken.Await: return "await";
                 case JSToken.Get: return "get";
                 case JSToken.Set: return "set";
 

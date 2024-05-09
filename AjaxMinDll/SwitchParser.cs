@@ -76,52 +76,52 @@ namespace Microsoft.Ajax.Utilities
         #region properties
 
         /// <summary>
-        /// Gets the parsed JavaScript code settings object
+        /// Returns the parsed JavaScript code settings object
         /// </summary>
         public CodeSettings JSSettings { get; private set; }
 
         /// <summary>
-        /// Gets the parsed CSS settings object
+        /// Returns the parsed CSS settings object
         /// </summary>
         public CssSettings CssSettings { get; private set; }
 
         /// <summary>
-        /// Gets a boolean value indicating whether or not Analyze mode is specified (default is false)
+        /// Returns a boolean value indicating whether or not Analyze mode is specified (default is false)
         /// </summary>
         public bool AnalyzeMode { get; private set; }
 
         /// <summary>
-        /// Gets a string value indication the report format specified for analyze more (default is null)
+        /// Returns a string value indication the report format specified for analyze more (default is null)
         /// </summary>
         public string ReportFormat { get; private set; }
 
         /// <summary>
-        /// Gets the path for the analyze scope report file (default is null, output to console)
+        /// Returns the path for the analyze scope report file (default is null, output to console)
         /// </summary>
         public string ReportPath { get; private set; }
 
         /// <summary>
-        /// Gets a boolean value indicating whether or not Pretty-Print mode is specified (default is false)
+        /// Returns a boolean value indicating whether or not Pretty-Print mode is specified (default is false)
         /// </summary>
         public bool PrettyPrint { get; private set; }
 
         /// <summary>
-        /// Gets or sets an integer value indicating the warning severity threshold for reporting. Default is zero (syntax errors only).
+        /// Returns or sets an integer value indicating the warning severity threshold for reporting. Default is zero (syntax errors only).
         /// </summary>
         public int WarningLevel { get; set; }
 
         /// <summary>
-        /// Gets or sets a flag indicating how existing files should be treated.
+        /// Returns or sets a flag indicating how existing files should be treated.
         /// </summary>
         public ExistingFileTreatment Clobber { get; set; }
 
         /// <summary>
-        /// Gets the string output encoding name. Default is null, indicating the default output encoding should be used.
+        /// Returns the string output encoding name. Default is null, indicating the default output encoding should be used.
         /// </summary>
         public string EncodingOutputName { get; private set; }
 
         /// <summary>
-        /// Gets the string input encoding name. Default is null, indicating the default output encoding should be used.
+        /// Returns the string input encoding name. Default is null, indicating the default output encoding should be used.
         /// </summary>
         public string EncodingInputName { get; private set; }
 

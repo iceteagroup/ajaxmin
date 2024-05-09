@@ -286,7 +286,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a string representation of all the indentifier replacements as a comma-separated
+        /// Returns or sets a string representation of all the indentifier replacements as a comma-separated
         /// list of "source=target" identifiers.
         /// </summary>
         public string RenamePairs
@@ -349,11 +349,11 @@ namespace Microsoft.Ajax.Utilities
 
         public IEnumerable<string> NoAutoRenameCollection { get { return m_noRenameSet; } }
 
-        /// <summary>
-        /// sets the collection of known global names to the enumeration of strings passed to this method
-        /// </summary>
-        /// <param name="globalArray">array of known global names</param>
-        public int SetNoAutoRenames(IEnumerable<string> noRenameNames)
+		/// <summary>
+		/// sets the collection of known global names to the enumeration of strings passed to this method
+		/// </summary>
+		/// <param name="noRenameNames">array of known global names</param>
+		public int SetNoAutoRenames(IEnumerable<string> noRenameNames)
         {
             m_noRenameSet.Clear();
             if (noRenameNames != null)
@@ -428,7 +428,7 @@ namespace Microsoft.Ajax.Utilities
         private HashSet<string> m_knownGlobals;
 
         /// <summary>
-        /// Gets the known global name collection
+        /// Returns the known global name collection
         /// </summary>
         public IEnumerable<string> KnownGlobalCollection { get { return m_knownGlobals; } }
 
@@ -467,7 +467,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets the known global names list as a single comma-separated string
+        /// Returns or sets the known global names list as a single comma-separated string
         /// </summary>
         public string KnownGlobalNamesList
         {
@@ -516,16 +516,16 @@ namespace Microsoft.Ajax.Utilities
         private HashSet<string> m_debugLookups;
 
         /// <summary>
-        /// Gets the set of debug lookups
+        /// Returns the set of debug lookups
         /// </summary>
         public IEnumerable<string> DebugLookupCollection { get { return m_debugLookups; } }
 
-        /// <summary>
-        /// Set the collection of debug "lookup" identifiers
-        /// </summary>
-        /// <param name="definedNames">collection of debug lookup identifier strings</param>
-        /// <returns>number of names successfully added to the collection</returns>
-        public int SetDebugNamespaces(IEnumerable<string> debugLookups)
+		/// <summary>
+		/// Set the collection of debug "lookup" identifiers
+		/// </summary>
+		/// <param name="debugLookups">collection of debug lookup identifier strings</param>
+		/// <returns>number of names successfully added to the collection</returns>
+		public int SetDebugNamespaces(IEnumerable<string> debugLookups)
         {
             m_debugLookups.Clear();
             if (debugLookups != null)
@@ -620,7 +620,7 @@ namespace Microsoft.Ajax.Utilities
         #region properties
 
         /// <summary>
-        /// Gets or sets a flag indicating whether to always escape non-ASCII characters as \uXXXX
+        /// Returns or sets a flag indicating whether to always escape non-ASCII characters as \uXXXX
         /// or to let the output encoding object handle that via the JsEncoderFallback object for the
         /// specified output encoding format. Default is false (let the Encoding object handle it).
         /// </summary>
@@ -631,7 +631,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to perform extra tasks on AMD-style defines.
+        /// Returns or sets whether to perform extra tasks on AMD-style defines.
         /// </summary>
         public bool AmdSupport
         {
@@ -667,7 +667,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a boolean value indicating whether to use old-style const statements (just var-statements that
+        /// Returns or sets a boolean value indicating whether to use old-style const statements (just var-statements that
         /// define unchangeable fields) or new EcmaScript 6 lexical declarations.
         /// </summary>
         public bool ConstStatementsMozilla
@@ -697,7 +697,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a settings value indicating how "safe" eval-statements are to be assumed.
+        /// Returns or sets a settings value indicating how "safe" eval-statements are to be assumed.
         /// Ignore (default) means we can assume eval-statements will not reference any local variables and functions.
         /// MakeImmediateSafe assumes eval-statements will reference local variables and function within the same scope.
         /// MakeAllSafe assumes eval-statements will reference any accessible local variable or function.
@@ -709,7 +709,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets the format to use for the JavaScript processing.
+        /// Returns or sets the format to use for the JavaScript processing.
         /// </summary>
         public JavaScriptFormat Format
         {
@@ -717,19 +717,19 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a boolean value indicating whether or not to ignore conditional-compilation comment syntax (true) or
+        /// Returns or sets a boolean value indicating whether or not to ignore conditional-compilation comment syntax (true) or
         /// to try to retain the comments in the output (false; default)
         /// </summary>
         public bool IgnoreConditionalCompilation { get; set; }
 
         /// <summary>
-        /// Gets or sets a boolean value indicating whether or not to ignore preprocessor defines comment syntax (true) or
+        /// Returns or sets a boolean value indicating whether or not to ignore preprocessor defines comment syntax (true) or
         /// to evaluate them (false; default)
         /// </summary>
         public bool IgnorePreprocessorDefines { get; set; }
 
         /// <summary>
-        /// Gets or sets a boolean value indicating whether to break up string literals containing &lt;/script&gt; so inline code won't break [true, default]
+        /// Returns or sets a boolean value indicating whether to break up string literals containing &lt;/script&gt; so inline code won't break [true, default]
         /// or to leave string literals as-is [false]
         /// </summary>
         public bool InlineSafeStrings
@@ -738,7 +738,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a boolean value indicating whether/how local variables and functions should be automatically renamed:
+        /// Returns or sets a boolean value indicating whether/how local variables and functions should be automatically renamed:
         /// KeepAll - do not rename local variables and functions; 
         /// CrunchAll - rename all local variables and functions to shorter names; 
         /// KeepLocalizationVars - rename all local variables and functions that do NOT start with L_
@@ -749,7 +749,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a boolean value indicating whether to add characters to the output to make sure Mac Safari bugs are not generated [true, default], or to
+        /// Returns or sets a boolean value indicating whether to add characters to the output to make sure Mac Safari bugs are not generated [true, default], or to
         /// disregard potential known Mac Safari bugs in older versions [false]
         /// </summary>
         public bool MacSafariQuirks
@@ -758,7 +758,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a boolean value indicating whether any operations are to be applied to the parsed tree [true, default],
+        /// Returns or sets a boolean value indicating whether any operations are to be applied to the parsed tree [true, default],
         /// or whether to return it as-is [false]. 
         /// </summary>
         public bool MinifyCode
@@ -790,7 +790,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a boolean value indicating whether object property names with the specified "from" names will
+        /// Returns or sets a boolean value indicating whether object property names with the specified "from" names will
         /// get renamed to the corresponding "to" names (true, default) when using the manual-rename feature, or left alone (false)
         /// </summary>
         public bool ManualRenamesProperties
@@ -799,7 +799,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a boolean value indicating whether or not the input files should be preprocessed only (default is false)
+        /// Returns or sets a boolean value indicating whether or not the input files should be preprocessed only (default is false)
         /// </summary>
         public bool PreprocessOnly 
         { 
@@ -808,7 +808,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether all function names must be preserved and remain as-named (true),
+        /// Returns or sets whether all function names must be preserved and remain as-named (true),
         /// or can be automatically renamed (false, default).
         /// </summary>
         public bool PreserveFunctionNames
@@ -817,7 +817,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to preserve important comments in the output.
+        /// Returns or sets whether to preserve important comments in the output.
         /// Default is true, preserving important comments. Important comments have an exclamation
         /// mark as the very first in-comment character (//! or /*!).
         /// </summary>
@@ -827,7 +827,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to always quote object literal property names.
+        /// Returns or sets whether to always quote object literal property names.
         /// Default is false.
         /// </summary>
         public bool QuoteObjectLiteralProperties
@@ -836,7 +836,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether or not to reorder function and variable
+        /// Returns or sets whether or not to reorder function and variable
         /// declarations within scopes (true, default), or to leave the order as specified in 
         /// the original source.
         /// </summary>
@@ -846,7 +846,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether or not to remove unreferenced function expression names (true, default)
+        /// Returns or sets whether or not to remove unreferenced function expression names (true, default)
         /// or to leave the names of function expressions, even if they are unreferenced (false).
         /// </summary>
         public bool RemoveFunctionExpressionNames
@@ -855,7 +855,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a boolean value indicating whether to remove unneeded code, such as uncalled local functions or unreachable code [true, default], 
+        /// Returns or sets a boolean value indicating whether to remove unneeded code, such as uncalled local functions or unreachable code [true, default], 
         /// or to keep such code in the output [false].
         /// </summary>
         public bool RemoveUnneededCode
@@ -864,7 +864,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets an enumeration that gives the parser a hint as to which version of EcmaScript standards to parse the source as.
+        /// Returns or sets an enumeration that gives the parser a hint as to which version of EcmaScript standards to parse the source as.
         /// See <see cref="JSParser.ParsedVersion"/> after parsing for which version the parser thought it had based on features found in the script.
         /// Errors/warnings, and optimized output may change based on this settings value.
         /// </summary>
@@ -875,7 +875,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets the source mode
+        /// Returns or sets the source mode
         /// </summary>
         public JavaScriptSourceMode SourceMode
         {
@@ -883,7 +883,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a boolean value indicating whether or not to force the input code into strict mode (true)
+        /// Returns or sets a boolean value indicating whether or not to force the input code into strict mode (true)
         /// or rely on the sources to turn on strict mode via the "use strict" prologue directive (false, default).
         /// </summary>
         public bool StrictMode
@@ -893,7 +893,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a boolean value indicating whether to strip debug statements [true, default],
+        /// Returns or sets a boolean value indicating whether to strip debug statements [true, default],
         /// or leave debug statements in the output [false]
         /// </summary>
         public bool StripDebugStatements
@@ -902,7 +902,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="ISourceMap"/> instance. Default is null, which won't output a symbol map.
+        /// Returns or sets the <see cref="ISourceMap"/> instance. Default is null, which won't output a symbol map.
         /// </summary>
         public ISourceMap SymbolsMap
         {
@@ -1134,9 +1134,9 @@ namespace Microsoft.Ajax.Utilities
         /// </summary>
         PropertyRenaming                            = 0x0000000080000000,
 
-        /// <summary>
-        /// Use preprocessor defines and the ///#IFDEF directive
-        /// </summary>
+        ///// <summary>
+        ///// Use preprocessor defines and the ///#IFDEF directive
+        ///// </summary>
         // WAY too dangerous to have this a kill-switch. Made a separate CodeSettings property: IgnorePreprocessorDefines.
         // people put -kill:-1 thinking they're just turning off minification, but they were ALSO turning off all the ///#IF processing
         // and getting unexpected errors when both paths make the output.

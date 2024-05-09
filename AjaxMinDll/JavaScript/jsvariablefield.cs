@@ -283,7 +283,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets a value that indicates whether this field is ever referenced in a scope
+        /// Returns a value that indicates whether this field is ever referenced in a scope
         /// other than the one in which it is defined
         /// </summary>
         public bool IsReferencedInnerScope
@@ -425,7 +425,10 @@ namespace Microsoft.Ajax.Utilities
         }
 
 
-        public override int GetHashCode()
+		/// <returns>
+		/// The hash code for the current <see cref="T:System.Object" />.
+		/// </returns>
+		public override int GetHashCode()
         {
             return Name.GetHashCode();
         }

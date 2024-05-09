@@ -45,7 +45,7 @@ namespace Microsoft.Ajax.Utilities
         #region internal properties
 
         /// <summary>
-        /// Gets or sets a boolean value for whether this is an existing scope or a new one
+        /// Returns or sets a boolean value for whether this is an existing scope or a new one
         /// generated during the current run.
         /// </summary>
         internal bool Existing { get; set; }

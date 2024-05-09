@@ -82,9 +82,14 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets whether this function object is a generator
+        /// Returns or sets whether this function object is a generator
         /// </summary>
         public bool IsGenerator { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether this function object is async
+        /// </summary>
+        public bool IsAsync { get; set; }
 
         // when parsed, this flag indicates that a function declaration is in the
         // proper source-element location

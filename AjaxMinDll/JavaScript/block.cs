@@ -27,7 +27,7 @@ namespace Microsoft.Ajax.Utilities
         private List<AstNode> m_list;
 
         /// <summary>
-        /// Gets a particular statement in the list of statements making up this block
+        /// Returns a particular statement in the list of statements making up this block
         /// </summary>
         /// <param name="index">zero-based index of the desired statement</param>
         /// <returns>abstract syntax tree node</returns>
@@ -50,7 +50,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets the count of statements making up this block
+        /// Returns the count of statements making up this block
         /// </summary>
         public int Count
         {
@@ -58,13 +58,13 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a boolean value indicating whether the brace for this block (if there was one) started
+        /// Returns or sets a boolean value indicating whether the brace for this block (if there was one) started
         /// on a newline (true) or the same line as the statement to which it belongs (false)
         /// </summary>
         public bool BraceOnNewLine { get; set; }
 
         /// <summary>
-        /// Gets or sets a flag indicating this this block is a module body
+        /// Returns or sets a flag indicating this this block is a module body
         /// </summary>
         public bool IsModule { get; set; }
 
@@ -79,13 +79,13 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets whether to force this block to always have curly-braces around it
+        /// Returns or sets whether to force this block to always have curly-braces around it
         /// and never to optimize them away.
         /// </summary>
         public bool ForceBraces { get; set; }
 
         /// <summary>
-        /// Gets or sets whether this block is a concise block (has no braces)
+        /// Returns or sets whether this block is a concise block (has no braces)
         /// </summary>
         public bool IsConcise { get; set; }
 
@@ -106,7 +106,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets an enumerator for the syntax tree nodes making up this block
+        /// Returns an enumerator for the syntax tree nodes making up this block
         /// </summary>
         public override IEnumerable<AstNode> Children
         {
@@ -235,7 +235,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets the zero-based index of the given syntax tree node within the block, or -1 if the node is not a direct child of the block
+        /// Returns the zero-based index of the given syntax tree node within the block, or -1 if the node is not a direct child of the block
         /// </summary>
         /// <param name="item">node to find</param>
         /// <returns>zero-based index of the node in the block, or -1 if the node is not a direct child of the block</returns>

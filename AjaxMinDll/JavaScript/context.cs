@@ -40,12 +40,12 @@ namespace Microsoft.Ajax.Utilities
         public int SourceOffsetEnd { get; internal set; }
 
         /// <summary>
-        /// Gets and sets the output start line after running an AST through an output visitor 
+        /// Returns and sets the output start line after running an AST through an output visitor 
         /// </summary>
         public int OutputLine { get; set; }
 
         /// <summary>
-        /// Gets and sets the output start column after running an AST through an output visitor
+        /// Returns and sets the output start column after running an AST through an output visitor
         /// </summary>
         public int OutputColumn { get; set; }
 

@@ -49,7 +49,7 @@ namespace Microsoft.Ajax.Utilities
         {
             get
             {
-                // if we have one, return it. If not, see ifthe right-hand side has one
+                // if we have one, return it. If not, see if the right-hand side has one
                 return base.TerminatingContext ?? Operand2.IfNotNull(n => n.TerminatingContext);
             }
         }

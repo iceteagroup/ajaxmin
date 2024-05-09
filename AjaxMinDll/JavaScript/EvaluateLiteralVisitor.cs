@@ -28,16 +28,17 @@ namespace Microsoft.Ajax.Utilities
             m_parser = parser;
         }
 
-        #region BinaryOperator helper methods
+		#region BinaryOperator helper methods
 
-        /// <summary>
-        /// If the new literal is a string literal, then we need to check to see if our
-        /// parent is a CallNode. If it is, and if the string literal can be an identifier,
-        /// we'll replace it with a Member-Dot operation.
-        /// </summary>
-        /// <param name="newLiteral">newLiteral we intend to replace this binaryop node with</param>
-        /// <returns>true if we replaced the parent callnode with a member-dot operation</returns>
-        private bool ReplaceMemberBracketWithDot(BinaryOperator node, ConstantWrapper newLiteral)
+		/// <summary>
+		/// If the new literal is a string literal, then we need to check to see if our
+		/// parent is a CallNode. If it is, and if the string literal can be an identifier,
+		/// we'll replace it with a Member-Dot operation.
+		/// </summary>
+		/// <param name="node">the operator node</param>
+		/// <param name="newLiteral">newLiteral we intend to replace this binary op node with</param>
+		/// <returns>true if we replaced the parent call node with a member-dot operation</returns>
+		private bool ReplaceMemberBracketWithDot(BinaryOperator node, ConstantWrapper newLiteral)
         {
             if (newLiteral.IsStringLiteral)
             {
@@ -179,12 +180,13 @@ namespace Microsoft.Ajax.Utilities
             }
         }
 
-        /// <summary>
-        /// Both the operands of this operator are constants. See if we can evaluate them
-        /// </summary>
-        /// <param name="left">left-side operand</param>
-        /// <param name="right">right-side operand</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+		/// <summary>
+		/// Both the operands of this operator are constants. See if we can evaluate them
+		/// </summary>
+		/// <param name="node">the operator node</param>
+		/// <param name="left">left-side operand</param>
+		/// <param name="right">right-side operand</param>
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         private void EvalThisOperator(BinaryOperator node, ConstantWrapper left, ConstantWrapper right)
         {
             // we can evaluate these operators if we know both operands are literal
@@ -309,16 +311,17 @@ namespace Microsoft.Ajax.Utilities
             }
         }
 
-        /// <summary>
-        /// We have determined that our left-hand operand is another binary operator, and its
-        /// right-hand operand is a constant that can be combined with our right-hand operand.
-        /// Now we want to set the right-hand operand of that other operator to the newly-
-        /// combined constant value, and then rotate it up -- replace our binary operator
-        /// with this newly-modified binary operator, and then attempt to re-evaluate it.
-        /// </summary>
-        /// <param name="binaryOp">the binary operator that is our left-hand operand</param>
-        /// <param name="newLiteral">the newly-combined literal</param>
-        private void RotateFromLeft(BinaryOperator node, BinaryOperator binaryOp, ConstantWrapper newLiteral)
+		/// <summary>
+		/// We have determined that our left-hand operand is another binary operator, and its
+		/// right-hand operand is a constant that can be combined with our right-hand operand.
+		/// Now we want to set the right-hand operand of that other operator to the newly-
+		/// combined constant value, and then rotate it up -- replace our binary operator
+		/// with this newly-modified binary operator, and then attempt to re-evaluate it.
+		/// </summary>
+		/// <param name="node">the operator node</param>
+		/// <param name="binaryOp">the binary operator that is our left-hand operand</param>
+		/// <param name="newLiteral">the newly-combined literal</param>
+		private void RotateFromLeft(BinaryOperator node, BinaryOperator binaryOp, ConstantWrapper newLiteral)
         {
             // replace our node with the binary operator
             binaryOp.Operand2 = newLiteral;
@@ -333,16 +336,17 @@ namespace Microsoft.Ajax.Utilities
             }
         }
 
-        /// <summary>
-        /// We have determined that our right-hand operand is another binary operator, and its
-        /// left-hand operand is a constant that can be combined with our left-hand operand.
-        /// Now we want to set the left-hand operand of that other operator to the newly-
-        /// combined constant value, and then rotate it up -- replace our binary operator
-        /// with this newly-modified binary operator, and then attempt to re-evaluate it.
-        /// </summary>
-        /// <param name="binaryOp">the binary operator that is our right-hand operand</param>
-        /// <param name="newLiteral">the newly-combined literal</param>
-        private void RotateFromRight(BinaryOperator node, BinaryOperator binaryOp, ConstantWrapper newLiteral)
+		/// <summary>
+		/// We have determined that our right-hand operand is another binary operator, and its
+		/// left-hand operand is a constant that can be combined with our left-hand operand.
+		/// Now we want to set the left-hand operand of that other operator to the newly-
+		/// combined constant value, and then rotate it up -- replace our binary operator
+		/// with this newly-modified binary operator, and then attempt to re-evaluate it.
+		/// </summary>
+		/// <param name="node">the operator node</param>
+		/// <param name="binaryOp">the binary operator that is our right-hand operand</param>
+		/// <param name="newLiteral">the newly-combined literal</param>
+		private void RotateFromRight(BinaryOperator node, BinaryOperator binaryOp, ConstantWrapper newLiteral)
         {
             // replace our node with the binary operator
             binaryOp.Operand1 = newLiteral;
@@ -390,13 +394,14 @@ namespace Microsoft.Ajax.Utilities
             return !result.IsInfinity;
         }
 
-        /// <summary>
-        /// Evaluate: (OTHER [op] CONST) [op] CONST
-        /// </summary>
-        /// <param name="thisConstant">second constant</param>
-        /// <param name="otherConstant">first constant</param>
-        /// <param name="leftOperator">first operator</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+		/// <summary>
+		/// Evaluate: (OTHER [op] CONST) [op] CONST
+		/// </summary>
+		/// <param name="node">the operator node</param>
+		/// <param name="thisConstant">second constant</param>
+		/// <param name="otherConstant">first constant</param>
+		/// <param name="leftOperator">first operator</param>
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         private void EvalToTheLeft(BinaryOperator node, ConstantWrapper thisConstant, ConstantWrapper otherConstant, BinaryOperator leftOperator)
         {
             if (leftOperator.OperatorToken == JSToken.Plus && node.OperatorToken == JSToken.Plus)
@@ -546,13 +551,14 @@ namespace Microsoft.Ajax.Utilities
             }
         }
 
-        /// <summary>
-        /// Evaluate: (CONST [op] OTHER) [op] CONST
-        /// </summary>
-        /// <param name="thisConstant">second constant</param>
-        /// <param name="otherConstant">first constant</param>
-        /// <param name="leftOperator">first operator</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+		/// <summary>
+		/// Evaluate: (CONST [op] OTHER) [op] CONST
+		/// </summary>
+		/// <param name="node">the operator node</param>
+		/// <param name="thisConstant">second constant</param>
+		/// <param name="otherConstant">first constant</param>
+		/// <param name="leftOperator">first operator</param>
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         private void EvalFarToTheLeft(BinaryOperator node, ConstantWrapper thisConstant, ConstantWrapper otherConstant, BinaryOperator leftOperator)
         {
             if (leftOperator.OperatorToken == JSToken.Minus)
@@ -637,13 +643,14 @@ namespace Microsoft.Ajax.Utilities
             }
         }
 
-        /// <summary>
-        /// Evaluate: CONST [op] (CONST [op] OTHER)
-        /// </summary>
-        /// <param name="thisConstant">first constant</param>
-        /// <param name="otherConstant">second constant</param>
-        /// <param name="leftOperator">second operator</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+		/// <summary>
+		/// Evaluate: CONST [op] (CONST [op] OTHER)
+		/// </summary>
+		/// <param name="node">the operator node</param>
+		/// <param name="thisConstant">first constant</param>
+		/// <param name="otherConstant">second constant</param>
+		/// <param name="rightOperator">second operator</param>
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         private void EvalToTheRight(BinaryOperator node, ConstantWrapper thisConstant, ConstantWrapper otherConstant, BinaryOperator rightOperator)
         {
             if (node.OperatorToken == JSToken.Plus)
@@ -764,13 +771,14 @@ namespace Microsoft.Ajax.Utilities
             }
         }
 
-        /// <summary>
-        /// Eval the two constants: CONST [op] (OTHER [op] CONST)
-        /// </summary>
-        /// <param name="thisConstant">first constant</param>
-        /// <param name="otherConstant">second constant</param>
-        /// <param name="rightOperator">second operator</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+		/// <summary>
+		/// Evaluates the two constants: CONST [op] (OTHER [op] CONST)
+		/// </summary>
+		/// <param name="node">the operator node</param>
+		/// <param name="thisConstant">first constant</param>
+		/// <param name="otherConstant">second constant</param>
+		/// <param name="rightOperator">second operator</param>
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         private void EvalFarToTheRight(BinaryOperator node, ConstantWrapper thisConstant, ConstantWrapper otherConstant, BinaryOperator rightOperator)
         {
             if (rightOperator.OperatorToken == JSToken.Minus)

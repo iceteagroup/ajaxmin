@@ -24,22 +24,22 @@ namespace Microsoft.Ajax.Utilities
         private AstNode m_initializer;
 
         /// <summary>
-        /// Gets or sets parameter order position, zero-based
+        /// Returns or sets parameter order position, zero-based
         /// </summary>
         public int Position { get; set; }
 
         /// <summary>
-        /// Gets or sets whether this parameter is prefixed with the rest token (...)
+        /// Returns or sets whether this parameter is prefixed with the rest token (...)
         /// </summary>
         public bool HasRest { get; set; }
 
         /// <summary>
-        /// Gets or sets the source context for the rest token (if any)
+        /// Returns or sets the source context for the rest token (if any)
         /// </summary>
         public Context RestContext { get; set; }
 
         /// <summary>
-        // Gets or sets the binding node
+        /// Gets or sets the binding node
         /// </summary>
         public AstNode Binding 
         {
@@ -51,12 +51,12 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets the context for the optional default-value assignment token
+        /// Returns or sets the context for the optional default-value assignment token
         /// </summary>
         public Context AssignContext { get; set; }
 
         /// <summary>
-        /// Gets or sets the optional default value for the parameter
+        /// Returns or sets the optional default value for the parameter
         /// </summary>
         public AstNode Initializer 
         {

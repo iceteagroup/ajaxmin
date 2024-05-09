@@ -96,7 +96,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a TextWriter instance to which raw preprocessed input will be
+        /// Returns or sets a TextWriter instance to which raw preprocessed input will be
         /// written when Parse is called.
         /// </summary>
         public TextWriter EchoWriter { get; set; }
@@ -131,7 +131,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets the array of timing points from a Parse run
+        /// Returns the array of timing points from a Parse run
         /// </summary>
         private long[] m_timingPoints;
         public IList<long> TimingPoints { get { return m_timingPoints; } }
@@ -810,6 +810,20 @@ namespace Microsoft.Ajax.Utilities
                     case JSToken.Try:
                         return ParseTryStatement();
 
+                    case JSToken.Async:
+
+                        var peekToken = PeekToken();
+                        if (peekToken == JSToken.Function)
+                        {
+                            // Treat 'async function' as a function declaration
+                            goto case (JSToken.Function);
+                        }
+                        else
+                        {
+                            // Treat `async(` as if its a normal expression
+                            goto default;
+                        }
+
                     case JSToken.Function:
                         // parse a function declaration
                         var function = ParseFunction(FunctionType.Declaration, m_currentToken.Clone());
@@ -852,8 +866,16 @@ namespace Microsoft.Ajax.Utilities
                         return endStatement;
 
                     case JSToken.Import:
-                        // import can't be an identifier name, so it must be an import statement
-                        return ParseImport();
+                        if (PeekCanBeImport())
+                        {
+                            // import can't be an identifier name, so it must be an import statement
+                            return ParseImport();
+                        }
+                        else
+                        {
+                            m_currentToken.Token = JSToken.Identifier;
+                            goto default;
+                        }
 
                     case JSToken.Export:
                         // export can't be an identifier name, so it must be an export statement
@@ -1588,6 +1610,13 @@ namespace Microsoft.Ajax.Utilities
             AstNode forNode = null;
             Context forCtx = m_currentToken.Clone();
             GetNextToken();
+            bool isAwait = false;
+            if (m_currentToken.Is(JSToken.Await))
+            {
+                isAwait = true;
+                GetNextToken();
+            }
+
             if (m_currentToken.Is(JSToken.LeftParenthesis))
             {
                 GetNextToken();
@@ -1639,12 +1668,14 @@ namespace Microsoft.Ajax.Utilities
             }
             else if (m_currentToken.IsNot(JSToken.Semicolon))
             {
+                var nextToken = PeekToken();
+                var inToken = nextToken == JSToken.Of ? JSToken.Of : JSToken.In;
                 // not a declaration (var, const, let), so parse an expression with the no-in target
-                initializer = ParseExpression(false, JSToken.In);
+                initializer = ParseExpression(false, inToken);
             }
 
             // either we are at a semicolon or an in/of token
-            var isForIn = m_currentToken.Is(JSToken.In) || m_currentToken.Is("of");
+            var isForIn = m_currentToken.Is(JSToken.In) || m_currentToken.Is(JSToken.Of);
             if (isForIn)
             {
                 // this IS a for..in or for..of statement
@@ -1715,12 +1746,13 @@ namespace Microsoft.Ajax.Utilities
             if (isForIn)
             {
                 forNode = new ForIn(forCtx)
-                    {
-                        Variable = initializer,
-                        OperatorContext = operatorContext,
-                        Collection = condOrColl,
-                        Body = AstNode.ForceToBlock(body),
-                    };
+                {
+                    IsAwait = isAwait,
+                    Variable = initializer,
+                    OperatorContext = operatorContext,
+                    Collection = condOrColl,
+                    Body = AstNode.ForceToBlock(body),
+                };
             }
             else
             {
@@ -2459,7 +2491,7 @@ namespace Microsoft.Ajax.Utilities
                     KeywordContext = m_currentToken.Clone(),
                 };
             GetNextToken();
-            if (m_currentToken.IsOne(JSToken.Var, JSToken.Const, JSToken.Let, JSToken.Function, JSToken.Class))
+            if (m_currentToken.IsOne(JSToken.Var, JSToken.Const, JSToken.Let, JSToken.Async, JSToken.Function, JSToken.Class))
             {
                 // export var/const/let/funcdecl/classdecl
                 var declaration = ParseStatement(true, true);
@@ -2628,7 +2660,9 @@ namespace Microsoft.Ajax.Utilities
                 {
                     KeywordContext = m_currentToken.Clone(),
                 };
+            
             GetNextToken();
+
             if (m_currentToken.Is(JSToken.StringLiteral))
             {
                 // import "module" ;
@@ -2777,6 +2811,14 @@ namespace Microsoft.Ajax.Utilities
             Block body = null;
             bool inExpression = (functionType == FunctionType.Expression);
 
+            var isAsync = m_currentToken.Is(JSToken.Async);
+            if (isAsync)
+            {
+                // skip the async keyword
+                GetNextToken();
+                ParsedVersion = ScriptVersion.EcmaScript6;
+            }
+
             // skip the opening token (function, get, or set).
             // methods will start off with no prefix -- right to the name.
             if (functionType != FunctionType.Method)
@@ -2916,13 +2958,14 @@ namespace Microsoft.Ajax.Utilities
             }
 
             return new FunctionObject(fncCtx)
-                {
-                    FunctionType = functionType,
-                    Binding = name,
-                    ParameterDeclarations = formalParameters,
-                    Body = body,
-                    IsGenerator = isGenerator
-                };
+            {
+                FunctionType = functionType,
+                Binding = name,
+                ParameterDeclarations = formalParameters,
+                Body = body,
+                IsGenerator = isGenerator,
+                IsAsync = isAsync
+            };
         }
 
         private void ParseFunctionBody(Block body)
@@ -3451,7 +3494,7 @@ namespace Microsoft.Ajax.Utilities
 
             if (term != null)
             {
-                if (term.Context.Token == JSToken.Yield && term is Lookup)
+                if ((term.Context.Token == JSToken.Yield  || term.Context.Token == JSToken.Await) && term is Lookup)
                 {
                     var expression = ParseExpression(true);
                     if (expression != null)
@@ -3943,6 +3986,7 @@ namespace Microsoft.Ajax.Utilities
                 case JSToken.LeftParenthesis:
                     {
                         var leftParen = m_currentToken.Clone();
+                        var parentAst = ast;
                         GetNextToken();
                         if (m_currentToken.Is(JSToken.For))
                         {
@@ -4027,6 +4071,8 @@ namespace Microsoft.Ajax.Utilities
                                     }
                                 }
                             }
+
+                            ast.Parent = parentAst;
                         }
                     }
                     break;
@@ -4040,6 +4086,53 @@ namespace Microsoft.Ajax.Utilities
                 case JSToken.LeftCurly:
                     ast = ParseObjectLiteral(false);
                     break;
+
+                // async function expression
+                case JSToken.Async:
+                    var nextToken = PeekToken();
+                    if (nextToken == JSToken.Function)
+                    {
+                        // treat 'async function' as a function expression
+                        goto case (JSToken.Function);
+                    }
+                    else if (nextToken == JSToken.LeftParenthesis)
+                    {
+                        ast = new Lookup(m_currentToken.Clone())
+                        {
+                            Name = JSKeyword.CanBeIdentifier(m_currentToken.Token)
+                        };
+
+                        GetNextToken();
+
+                        nextToken = PeekToken();
+                        if (nextToken == JSToken.Function)
+                            break;
+
+                        goto case (JSToken.LeftParenthesis);
+                    }
+                    else if (nextToken == JSToken.Identifier)
+                    {
+                        ast = new Lookup(m_currentToken.Clone())
+                        {
+                            Name = JSKeyword.CanBeIdentifier(m_currentToken.Token)
+                        };
+
+                        GetNextToken();
+
+                        ast = new Lookup(m_currentToken.Clone())
+                        {
+                            Name = m_scanner.Identifier,
+                            Parent = ast
+                        };
+                        GetNextToken();
+                        ast = ParseArrowFunction(ast);
+                        break;
+                    }
+                    else
+                    {
+                        // 'async' as an identifier
+                        goto default;
+                    }
 
                 // function expression
                 case JSToken.Function:
@@ -4059,6 +4152,23 @@ namespace Microsoft.Ajax.Utilities
                     GetNextToken();
                     break;
 
+                case JSToken.Await:
+                    {
+                        if (ParsedVersion == ScriptVersion.EcmaScript6 || m_settings.ScriptVersion == ScriptVersion.EcmaScript6)
+                        {
+                            ast = ParseAwaitExpression();
+                        }
+                        else
+                        {
+                            // we need to protect against non-ES6 code using "await" as a variable name
+                            ast = new Lookup(m_currentToken.Clone())
+                            {
+                                Name = "await"
+                            };
+                            GetNextToken();
+                        }
+                    }
+                    break;
                 case JSToken.Yield:
                     {
                         // TODO: not sure if this is the right place to hook for the ES6 YieldExpression semantics!
@@ -4267,6 +4377,27 @@ namespace Microsoft.Ajax.Utilities
                 };
         }
 
+        private AstNode ParseAwaitExpression()
+        {
+            ParsedVersion = ScriptVersion.EcmaScript6;
+
+            // save the context of the await operator, then skip past it
+            var context = m_currentToken.Clone();
+            var operatorContext = context.Clone();
+            GetNextToken();
+
+            bool bAssign;
+            AstNode expression = ParseUnaryExpression(out bAssign, false);
+            expression = new UnaryOperator(expression.Context.CombineWith(operatorContext))
+            {
+                OperatorContext = operatorContext,
+                OperatorToken = JSToken.Await,
+                Operand = expression
+            };
+
+            return expression;
+        }
+
         private FunctionObject ParseArrowFunction(AstNode parameters)
         {
             // we are on the arrow-function operator now
@@ -4275,10 +4406,11 @@ namespace Microsoft.Ajax.Utilities
             ParsedVersion = ScriptVersion.EcmaScript6;
 
             var functionObject = new FunctionObject(parameters.Context.Clone())
-                {
-                    ParameterDeclarations = BindingTransform.ToParameters(parameters),
-                    FunctionType = FunctionType.ArrowFunction,
-                };
+            {
+                ParameterDeclarations = BindingTransform.ToParameters(parameters),
+                FunctionType = FunctionType.ArrowFunction,
+                IsAsync = parameters.Parent is Lookup lookup && lookup.Name == JSKeyword.CanBeIdentifier(JSToken.Async)
+            };
             functionObject.UpdateWith(arrowContext);
             if (m_currentToken.Is(JSToken.LeftCurly))
             {
@@ -4676,7 +4808,7 @@ namespace Microsoft.Ajax.Utilities
                     ReportError(JSError.FunctionExpressionExpected);
                 }
             }
-            else if (m_currentToken.Is(JSToken.Multiply) || nextToken == JSToken.LeftParenthesis)
+            else if (m_currentToken.Is(JSToken.Multiply) || m_currentToken.Is(JSToken.Async) || nextToken == JSToken.LeftParenthesis)
             {
                 // method declaration in ES6
                 // starts off right with the name. Don't set the name field -- the method
@@ -4901,9 +5033,7 @@ namespace Microsoft.Ajax.Utilities
                             if (null != name)
                             {
                                 // don't report an error here -- it's actually okay to have a property name
-                                // that is a keyword which is okay to be an identifier. For instance,
-                                // jQuery has a commonly-used method named "get" to make an ajax request
-                                //ForceReportInfo(JSError.KeywordUsedAsIdentifier);
+                                // that is a keyword which is okay to be an identifier.
                                 id = new ConstantWrapper(name, PrimitiveType.String, m_currentToken.Clone());
                             }
                             else if (JSScanner.IsValidIdentifier(m_currentToken.Code))
@@ -5056,8 +5186,7 @@ namespace Microsoft.Ajax.Utilities
         /// set the source by creating a document from the actual source and its context,
         /// then create and initialize a scanner for that document.
         /// </summary>
-        /// <param name="source">source code</param>
-        /// <param name="sourceContext">optional context for the source code</param>
+        /// <param name="documentContext">optional context for the source code</param>
         private void SetDocumentContext(DocumentContext documentContext)
         {
             // set the document object to point to this parser.
@@ -5469,6 +5598,17 @@ namespace Microsoft.Ajax.Utilities
             return (peekToken.Is(JSToken.StringLiteral) && !lineBreak) || peekToken.Is(JSToken.Identifier) || JSKeyword.CanBeIdentifier(peekToken.Token) != null;
         }
 
+        private bool PeekCanBeImport()
+        {
+            // clone the scanner, turn off any error reporting, and get the next token
+            var clonedScanner = m_scanner.PeekClone();
+            clonedScanner.SuppressErrors = true;
+            var peekToken = clonedScanner.ScanNextToken();
+
+            // if we have a parenthesis it's an import() expression.
+            return !peekToken.Is(JSToken.LeftParenthesis);
+        }
+
         #endregion
 
         #region error handlers
@@ -5506,7 +5646,6 @@ namespace Microsoft.Ajax.Utilities
         ///  token or not
         /// </summary>
         /// <param name="errorId">Error to report</param>
-        /// <param name="skipToken">true to move to the next token when GetNextToken is called; false to stay on this token</param>
         /// <param name="context">context to report against, or current token if null</param>
         /// <param name="forceToError">whether to force to an error, or use the default severity</param>
         private void ReportError(JSError errorId, Context context = null, bool forceToError = false)

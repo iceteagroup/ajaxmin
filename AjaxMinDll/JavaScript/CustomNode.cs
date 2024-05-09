@@ -37,7 +37,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets whether to add a semicolon after the node when another node follows this inside a block
+        /// Returns if to add a semicolon after the node when another node follows this inside a block
         /// </summary>
         internal virtual bool RequiresSeparator
         {
@@ -50,7 +50,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets whether the custom node is a debugger statement and should be stripped for release builds
+        /// Returns if the custom node is a debugger statement and should be stripped for release builds
         /// </summary>
         internal virtual bool IsDebuggerStatement
         {

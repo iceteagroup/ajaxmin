@@ -95,9 +95,9 @@ namespace Microsoft.Ajax.Utilities
             RegexOptions.CultureInvariant | RegexOptions.Singleline | RegexOptions.Compiled);
 
         // IE8 @font-face directive has an issue with src properties that are URLs ending with .EOT
-        // that don't have any querystring. They end up sending a malformed HTTP request to the server,
+        // that don't have any query string. They end up sending a malformed HTTP request to the server,
         // which is bad for the server. So we want to automatically fix this for developers: if ANY URL
-        // ends in .EOT without a querystring parameters, just add a question mark in the appropriate 
+        // ends in .EOT without a query string parameters, just add a question mark in the appropriate 
         // location. This fixes the IE8 issue.
         private static Regex s_eotIE8Fix = new Regex(
             @"\.eot([^?\\/\w])",
@@ -105,10 +105,10 @@ namespace Microsoft.Ajax.Utilities
 
         #region Comment-related fields
 
-        /// <summary>
-        /// regular expression for matching css comments
-        /// Format: /*(anything or nothing inside)*/
-        /// </summary>
+        ///// <summary>
+        ///// regular expression for matching css comments
+        ///// Format: /*(anything or nothing inside)*/
+        ///// </summary>
         ////private static Regex s_regexComments = new Regex(
         ////    @"/\*([^*]|(\*+[^*/]))*\*+/",
         ////    RegexOptions.CultureInvariant | RegexOptions.Singleline | RegexOptions.Compiled);
@@ -1293,7 +1293,7 @@ namespace Microsoft.Ajax.Utilities
 
                 // output the AND text.
                 // MIGHT be AND( if it was a function, so first set a flag so we will know
-                // wether or not to expect the opening paren
+                // whether or not to expect the opening parent.
                 if (CurrentTokenType == TokenType.Function)
                 {
                     // this is not strictly allowed by the CSS3 spec!
@@ -1306,12 +1306,12 @@ namespace Microsoft.Ajax.Utilities
                     Append("and (");
                     SkipSpace();
 
-                    // included the paren
+                    // included the parent.
                     ParseMediaQueryExpression();
                 }
                 else
                 {
-                    // didn't include the paren -- it BETTER be the next token 
+                    // didn't include the parent -- it BETTER be the next token 
                     // (after we output the AND token)
                     AppendCurrent();
                     SkipSpace();
@@ -4605,7 +4605,6 @@ namespace Microsoft.Ajax.Utilities
         /// <summary>
         /// Always add new line to the stream
         /// </summary>
-        /// <param name="sb"></param>
         private void AddNewLine()
         {
             if (!m_outputNewLine)

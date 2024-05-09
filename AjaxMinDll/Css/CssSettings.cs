@@ -154,7 +154,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets ColorNames setting. Default is Strict.
+        /// Returns or sets ColorNames setting. Default is Strict.
         /// </summary>
         public CssColor ColorNames
         {
@@ -162,7 +162,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets CommentMode setting. Default is Important.
+        /// Returns or sets CommentMode setting. Default is Important.
         /// </summary>
         public CssComment CommentMode
         {
@@ -170,7 +170,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to minify the javascript within expression functions. Deault is true.
+        /// Returns or sets whether to minify the javascript within expression functions. Deault is true.
         /// </summary>
         public bool MinifyExpressions
         {
@@ -178,7 +178,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a value indicating how to treat the input source. Default is FullStyleSheet.
+        /// Returns or sets a value indicating how to treat the input source. Default is FullStyleSheet.
         /// </summary>
         public CssType CssType 
         { 
@@ -187,7 +187,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether empty blocks removes the corresponding rule or directive. Default is true.
+        /// Returns or sets whether empty blocks removes the corresponding rule or directive. Default is true.
         /// </summary>
         public bool RemoveEmptyBlocks
         {
@@ -196,7 +196,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether IE8 .EOT fonts should get a question-mark appended to the URL
+        /// Returns or sets whether IE8 .EOT fonts should get a question-mark appended to the URL
         /// (if not there already) to prevent the browser from generating invalid HTTP requests to the server. Default is true.
         /// </summary>
         public bool FixIE8Fonts
@@ -206,7 +206,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a list of vendor-specific prefixes ("ms", "webkit", "moz") that will be omitted from the output.
+        /// Returns or sets a list of vendor-specific prefixes ("ms", "webkit", "moz") that will be omitted from the output.
         /// Default is no exclusions.
         /// </summary>
         public IList<string> ExcludeVendorPrefixes

@@ -36,12 +36,12 @@ namespace Microsoft.Ajax.Utilities
         private ActivationObject m_enclosingScope;
 
         /// <summary>
-        /// Gets or sets the parent node of this node in the abstract syntax tree
+        /// Returns or sets the parent node of this node in the abstract syntax tree
         /// </summary>
         public AstNode Parent { get; set; }
 
         /// <summary>
-        /// Gets or sets the source context of this node
+        /// Returns or sets the source context of this node
         /// </summary>
         public Context Context { get; set; }
 
@@ -50,28 +50,28 @@ namespace Microsoft.Ajax.Utilities
         public virtual Context TerminatingContext { get; set; }
 
         /// <summary>
-        /// Gets a boolean flag indicating whether this node is an expression
+        /// Returns a boolean flag indicating whether this node is an expression
         /// </summary>
         public virtual bool IsExpression { get { return false; } }
 
         /// <summary>
-        /// Gets a boolean flag indicating whether this node is a constant expression
+        /// Returns a boolean flag indicating whether this node is a constant expression
         /// </summary>
         public virtual bool IsConstant { get { return false; } }
 
         /// <summary>
-        /// Gets or sets a flag indicating whether we have analyzed this statement and determined it
+        /// Returns or sets a flag indicating whether we have analyzed this statement and determined it
         /// to be for a debug-only build 
         /// </summary>
         public bool IsDebugOnly { get; set; }
 
         /// <summary>
-        /// Gets or sets the order-execution index for the node's function scope
+        /// Returns or sets the order-execution index for the node's function scope
         /// </summary>
         public long Index { get; set; }
 
         /// <summary>
-        /// Gets the order precedence of this node, if it is an expression
+        /// Returns the order precedence of this node, if it is an expression
         /// </summary>
         public virtual OperatorPrecedence Precedence
         {
@@ -79,7 +79,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a flag indicting whether this node is a declaration
+        /// Returns or sets a flag indicting whether this node is a declaration
         /// </summary>
         public virtual bool IsDeclaration
         {
@@ -87,7 +87,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets a boolean value representing whether this node is a Lookup node resolving to the global predefined window object.
+        /// Returns a boolean value representing whether this node is a Lookup node resolving to the global predefined window object.
         /// </summary>
         public bool IsWindowLookup
         {
@@ -101,7 +101,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets the syntax tree node representing the leftmost portion of this node's subtree.
+        /// Returns the syntax tree node representing the leftmost portion of this node's subtree.
         /// </summary>
         public virtual AstNode LeftHandSide
         {
@@ -129,7 +129,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets a flag indicating whether or not this node has its own associated scope, or relies on a parent node's scope
+        /// Returns a flag indicating whether or not this node has its own associated scope, or relies on a parent node's scope
         /// </summary>
         public bool HasOwnScope
         {
@@ -137,7 +137,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets an enumeration representing the child nodes of this node in the abstract syntax tree
+        /// Returns an enumeration representing the child nodes of this node in the abstract syntax tree
         /// </summary>
         public virtual IEnumerable<AstNode> Children
         {
@@ -188,7 +188,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets a valid indicating the primitive JavaScript type of this node, if known.
+        /// Returns a valid indicating the primitive JavaScript type of this node, if known.
         /// </summary>
         /// <returns></returns>
         public virtual PrimitiveType FindPrimitiveType()
@@ -221,7 +221,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets a boolean value representing whether this node is a Lookup node resolving to the global name, or
+        /// Returns a boolean value representing whether this node is a Lookup node resolving to the global name, or
         /// a member off the global window object with the given name.
         /// </summary>
         public bool IsGlobalNamed(string name)

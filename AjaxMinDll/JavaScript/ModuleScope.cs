@@ -24,12 +24,12 @@ namespace Microsoft.Ajax.Utilities
         private Dictionary<string, JSVariableField> m_knownExports;
 
         /// <summary>
-        /// Gets or sets a flag to indicate whether this module exports a default expression
+        /// Returns or sets a flag to indicate whether this module exports a default expression
         /// </summary>
         public bool HasDefaultExport { get; set; }
 
         /// <summary>
-        /// Gets or sets a flag to indicate whether this module re-exports all exports from an unknown external module
+        /// Returns or sets a flag to indicate whether this module re-exports all exports from an unknown external module
         /// </summary>
         public bool IsNotComplete { get; set; }
 

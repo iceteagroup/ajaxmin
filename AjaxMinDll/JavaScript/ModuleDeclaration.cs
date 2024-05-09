@@ -24,7 +24,7 @@ namespace Microsoft.Ajax.Utilities
         private Block m_body;
 
         /// <summary>
-        /// Gets or sets the identifier used when binding all of an external modules exports as properties on a local object
+        /// Returns or sets the identifier used when binding all of an external modules exports as properties on a local object
         /// </summary>
         public BindingIdentifier Binding
         {
@@ -38,7 +38,7 @@ namespace Microsoft.Ajax.Utilities
         public Context FromContext { get; set; }
 
         /// <summary>
-        /// Gets or sets the module name
+        /// Returns or sets the module name
         /// </summary>
         public string ModuleName { get; set; }
 
@@ -47,7 +47,7 @@ namespace Microsoft.Ajax.Utilities
         public ModuleScope ReferencedModule { get; set; }
 
         /// <summary>
-        /// Gets or sets a flag indicating whether or not this module is an implicit module,
+        /// Returns or sets a flag indicating whether or not this module is an implicit module,
         /// parsed as an external file that gets referenced by an import statement
         /// </summary>
         public bool IsImplicit { get; set; }

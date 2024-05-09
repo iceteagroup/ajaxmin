@@ -90,17 +90,17 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets the original name of the identifier, before any renaming
+        /// Returns the original name of the identifier, before any renaming
         /// </summary>
         public string OriginalName
         {
             get { return Name; }
         }
 
-        /// <summary>
-        /// Gets whether or not the item was renamed
-        /// </summary>
-        public bool WasRenamed
+		/// <summary>
+		/// Returns whether the item was renamed
+		/// </summary>
+		public bool WasRenamed
         {
             get
             {

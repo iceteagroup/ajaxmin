@@ -38,7 +38,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets the name that is declared for this specifier.
+        /// Returns the name that is declared for this specifier.
         /// Only used if there was no local identifier defined and we added the external name to our scope.
         /// </summary>
         public string Name
@@ -47,7 +47,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets null; import specifiers are not parameters.
+        /// Returns null; import specifiers are not parameters.
         /// Only used if there was no local identifier defined and we added the external name to our scope.
         /// </summary>
         public AstNode Initializer
@@ -56,7 +56,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets a flag indicating that this is not a parameter
+        /// Returns a flag indicating that this is not a parameter
         /// Only used if there was no local identifier defined and we added the external name to our scope.
         /// </summary>
         public bool IsParameter
@@ -65,7 +65,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets a flag to indicate that imported external named cannot be renamed.
+        /// Returns a flag to indicate that imported external named cannot be renamed.
         /// Only used if there was no local identifier defined and we added the external name to our scope.
         /// </summary>
         public bool RenameNotAllowed
@@ -74,7 +74,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a variable field corresponding to an import specifiers imported external name
+        /// Returns or sets a variable field corresponding to an import specifiers imported external name
         /// Only used if there was no local identifier defined and we added the external name to our scope.
         /// </summary>
         public JSVariableField VariableField { get; set; }

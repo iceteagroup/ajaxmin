@@ -23,27 +23,27 @@ namespace Microsoft.Ajax.Utilities
     public class BindingIdentifier : AstNode, INameDeclaration, IRenameable
     {
         /// <summary>
-        /// Gets or sets the name of the binding
+        /// Returns or sets the name of the binding
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the field corresponding to this declaration
+        /// Returns or sets the field corresponding to this declaration
         /// </summary>
         public JSVariableField VariableField { get; set; }
 
         /// <summary>
-        /// Gets or sets whether or not this declaration can be renamed
+        /// Returns or sets whether or not this declaration can be renamed
         /// </summary>
         public bool RenameNotAllowed { get; set; }
 
         /// <summary>
-        /// Gets or sets the scope type for this declaration (lexical or variable)
+        /// Returns or sets the scope type for this declaration (lexical or variable)
         /// </summary>
         public ScopeType ScopeType { get; set; }
 
         /// <summary>
-        /// Gets any initializer that may be associated with this binding identifier
+        /// Returns any initializer that may be associated with this binding identifier
         /// </summary>
         public AstNode Initializer
         {
@@ -51,12 +51,12 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets whether this binding identifier is a parameter name
+        /// Returns or sets whether this binding identifier is a parameter name
         /// </summary>
         public bool IsParameter { get; set; }
 
         /// <summary>
-        /// Gets the original name of the identifier, before any renaming
+        /// Returns the original name of the identifier, before any renaming
         /// </summary>
         public string OriginalName
         {
@@ -64,7 +64,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets whether or not the item was renamed
+        /// Returns whether the item was renamed
         /// </summary>
         public bool WasRenamed
         {

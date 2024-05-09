@@ -86,6 +86,7 @@ namespace Microsoft.Ajax.Utilities
         Plus = FirstBinaryOperator,     // +
         Minus,                          // -
         Multiply,                       // *
+        Exponent,                       // **
         Divide,                         // /
         Modulo,                         // %
         BitwiseAnd,                     // &
@@ -106,15 +107,18 @@ namespace Microsoft.Ajax.Utilities
 
         LogicalAnd,                     // &&
         LogicalOr,                      // ||
+        NullishCoalesce,                // ??
 
         InstanceOf,
         In,
+        Of,                             // of
         Comma,                          // ,
 
         Assign,                         // =
         PlusAssign,                     // +=
         MinusAssign,                    // -=
         MultiplyAssign,                 // *=
+        ExponentAssign,                 // **=
         DivideAssign,                   // /=
         ModuloAssign,                   // %=
         BitwiseAndAssign,               // &=
@@ -123,6 +127,9 @@ namespace Microsoft.Ajax.Utilities
         LeftShiftAssign,                // <<=
         RightShiftAssign,               // >>=
         UnsignedRightShiftAssign,       // >>>=
+        LogicalOrAssign,                // ||=
+        LogicalAndAssign,               // &&=
+        LogicalNullishAssign,           // ??=
         LastAssign = UnsignedRightShiftAssign,
 
         ConditionalIf,                  // ? // MUST FOLLOW LastBinaryOp
@@ -164,6 +171,8 @@ namespace Microsoft.Ajax.Utilities
         Public,
         Static,
         Yield,
+        Async,
+        Await,
 
         // browser-specific don't uses
         Native, // Chrome

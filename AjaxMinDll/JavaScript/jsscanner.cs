@@ -80,27 +80,27 @@ namespace Microsoft.Ajax.Utilities
         #region public settings properties
 
         /// <summary>
-        /// Gets or sets whether to use AjaxMin preprocessor defines or ignore them
+        /// Returns or sets whether to use AjaxMin preprocessor defines or ignore them
         /// </summary>
         public bool UsePreprocessorDefines { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to completely ignore IE conditional-compilation comments
+        /// Returns or sets whether to completely ignore IE conditional-compilation comments
         /// </summary>
         public bool IgnoreConditionalCompilation { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to allow ASP.NET <% ... %> syntax within the script
+        /// Returns or sets whether to allow ASP.NET syntax within the script
         /// </summary>
         public bool AllowEmbeddedAspNetBlocks { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to strip debug comment blocks entirely
+        /// Returns or sets whether to strip debug comment blocks entirely
         /// </summary>
         public bool StripDebugCommentBlocks { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to suppress all scanning errors
+        /// Returns or sets whether to suppress all scanning errors
         /// </summary>
         public bool SuppressErrors { get; set; }
 
@@ -109,32 +109,32 @@ namespace Microsoft.Ajax.Utilities
         #region public scan-state properties
 
         /// <summary>
-        /// Gets the current line of the input file
+        /// Returns the current line of the input file
         /// </summary>
         public int CurrentLine { get { return m_currentLine; } }
 
         /// <summary>
-        /// Gets whether we have passed the end of the input source
+        /// Returns if we have passed the end of the input source
         /// </summary>
         public bool IsEndOfFile { get { return m_currentPosition >= m_endPos; } }
 
         /// <summary>
-        /// Gets the position within the source of the start of the current line
+        /// Returns the position within the source of the start of the current line
         /// </summary>
         public int StartLinePosition { get { return m_startLinePosition; } }
 
         /// <summary>
-        /// Gets whether the scanned literal has potential cross-browser issues
+        /// Returns if the scanned literal has potential cross-browser issues
         /// </summary>
         public bool LiteralHasIssues { get { return m_literalIssues; } }
 
         /// <summary>
-        /// Gets the current decoded string literal value
+        /// Returns the current decoded string literal value
         /// </summary>
         public string StringLiteralValue { get { return m_decodedString; } }
 
         /// <summary>
-        /// Gets the current decoded identifier string
+        /// Returns the current decoded identifier string
         /// </summary>
         public string Identifier
         {
@@ -147,7 +147,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets the current token reference
+        /// Returns the current token reference
         /// </summary>
         public Context CurrentToken
         {
@@ -1174,6 +1174,7 @@ namespace Microsoft.Ajax.Utilities
                             case JSToken.Public:
                             case JSToken.Static:
                             case JSToken.Yield:
+                            case JSToken.Await:
                                 // in strict mode, these ARE keywords, otherwise they are okay
                                 // to be identifiers
                                 isKeyword = strictMode;
@@ -1225,25 +1226,25 @@ namespace Microsoft.Ajax.Utilities
             return isValid;
         }
 
-        /// <summary>
-        /// Determines if the character(s) at the given index is a valid identifier start
-        /// </summary>
-        /// <param name="startIndex">potential identifier string</param>
-        /// <param name="index">index of the starting character</param>
-        /// <returns>true if the character at the given position is a valid identifier start</returns>
-        private static bool IsValidIdentifierStart(string text, int index)
+		/// <summary>
+		/// Determines if the character(s) at the given index is a valid identifier start
+		/// </summary>
+		/// <param name="text">potential identifier string</param>
+		/// <param name="index">index of the starting character</param>
+		/// <returns>true if the character at the given position is a valid identifier start</returns>
+		private static bool IsValidIdentifierStart(string text, int index)
         {
             return IsValidIdentifierStart(text, ref index);
         }
 
-        /// <summary>
-        /// Determines if the character(s) at the given index is a valid identifier start,
-        /// and adjust the index to point to the following character
-        /// </summary>
-        /// <param name="startIndex">potential identifier string</param>
-        /// <param name="index">index of the starting character on entry; index of the NEXT character on exit</param>
-        /// <returns>true if the character at the given position is a valid identifier start</returns>
-        private static bool IsValidIdentifierStart(string name, ref int startIndex)
+		/// <summary>
+		/// Determines if the character(s) at the given index is a valid identifier start,
+		/// and adjust the index to point to the following character
+		/// </summary>
+		/// <param name="name">potential identifier string</param>
+		/// <param name="startIndex">index of the starting character on entry; index of the NEXT character on exit</param>
+		/// <returns>true if the character at the given position is a valid identifier start</returns>
+		private static bool IsValidIdentifierStart(string name, ref int startIndex)
         {
             var isValid = false;
 
@@ -1293,13 +1294,13 @@ namespace Microsoft.Ajax.Utilities
             return isValid;
         }
 
-        /// <summary>
-        /// Determines if the character(s) at the given index is a valid identifier part
-        /// </summary>
-        /// <param name="startIndex">potential identifier string</param>
-        /// <param name="index">index of the starting character</param>
-        /// <returns>true if the character at the given position is a valid identifier part</returns>
-        private static bool IsValidIdentifierPart(string text, int index)
+		/// <summary>
+		/// Determines if the character(s) at the given index is a valid identifier part
+		/// </summary>
+		/// <param name="text">potential identifier string</param>
+		/// <param name="index">index of the starting character</param>
+		/// <returns>true if the character at the given position is a valid identifier part</returns>
+		private static bool IsValidIdentifierPart(string text, int index)
         {
             return IsValidIdentifierPart(text, ref index);
         }

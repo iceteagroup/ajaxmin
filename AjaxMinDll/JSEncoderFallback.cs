@@ -93,24 +93,24 @@ namespace Microsoft.Ajax.Utilities
             Reset();
         }
 
-        /// <summary>
-        /// Get the single-character encoding string
-        /// </summary>
-        /// <param name="unknownChar">character to encode</param>
-        /// <returns>encoded string</returns>
-        private static string GetEncoding(int charValue)
+		/// <summary>
+		/// Get the single-character encoding string
+		/// </summary>
+		/// <param name="charValue">character to encode</param>
+		/// <returns>encoded string</returns>
+		private static string GetEncoding(int charValue)
         {
             // format: \uXXXX
             return "\\u{0:x4}".FormatInvariant(charValue);
         }
 
-        /// <summary>
-        /// Prepare the unknown character for encoding
-        /// </summary>
-        /// <param name="unknownChar">character to process</param>
-        /// <param name="index">position in input string</param>
-        /// <returns>true if characters to process placed in buffer</returns>
-        public override bool Fallback(char charUnknown, int index)
+		/// <summary>
+		/// Prepare the unknown character for encoding
+		/// </summary>
+		/// <param name="charUnknown">character to process</param>
+		/// <param name="index">position in input string</param>
+		/// <returns>true if characters to process placed in buffer</returns>
+		public override bool Fallback(char charUnknown, int index)
         {
             // if we're not done with the current buffer, we're being recursive.
             if (m_position < m_fallbackString.Length)
@@ -126,14 +126,14 @@ namespace Microsoft.Ajax.Utilities
             return (m_fallbackString.Length > 0);
         }
 
-        /// <summary>
-        /// Prepare the unknwon surrogate pair for encoding
-        /// </summary>
-        /// <param name="unknownCharHigh">high surrogate pair character</param>
-        /// <param name="unknownCharLow">low surrogate pair character</param>
-        /// <param name="index">index of character in the stream</param>
-        /// <returns></returns>
-        public override bool Fallback(char charUnknownHigh, char charUnknownLow, int index)
+		/// <summary>
+		/// Prepare the unknown surrogate pair for encoding
+		/// </summary>
+		/// <param name="charUnknownHigh">high surrogate pair character</param>
+		/// <param name="charUnknownLow">low surrogate pair character</param>
+		/// <param name="index">index of character in the stream</param>
+		/// <returns></returns>
+		public override bool Fallback(char charUnknownHigh, char charUnknownLow, int index)
         {
             // if we're not done with the current buffer, we're being recursive.
             if (m_position < m_fallbackString.Length)

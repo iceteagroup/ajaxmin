@@ -100,7 +100,7 @@ namespace Microsoft.Ajax.Utilities
         #region properties
 
         /// <summary>
-        /// Gets or sets a boolean value indicating whether embedded asp.net blocks (&lt;% %>) should be recognized and output as is. Default is false.
+        /// Returns or sets a boolean value indicating whether embedded asp.net blocks (&lt;% %>) should be recognized and output as is. Default is false.
         /// </summary>
         public bool AllowEmbeddedAspNetBlocks
         {
@@ -109,7 +109,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the opening curly brace for blocks is
+        /// Returns or sets whether the opening curly brace for blocks is
         /// on its own line (NewLine, default) or on the same line as the preceding code (SameLine)
         /// or taking a hint from the source code position (UseSource). Only relevant when OutputMode is 
         /// set to MultipleLines.
@@ -121,7 +121,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a flag for whether to ignore ALL errors found in the input code.
+        /// Returns or sets a flag for whether to ignore ALL errors found in the input code.
         /// Default is false.
         /// </summary>
         public bool IgnoreAllErrors 
@@ -131,7 +131,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets an integer value specifying the number of spaces per indent level when in MultipleLines output mode. (Default = 4)
+        /// Returns or sets an integer value specifying the number of spaces per indent level when in MultipleLines output mode. (Default = 4)
         /// </summary>
         public int IndentSize
         {
@@ -140,7 +140,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets the column position at which the line will be broken at the next available opportunity.
+        /// Returns or sets the column position at which the line will be broken at the next available opportunity.
         /// Default value is int.MaxValue - 1000.
         /// </summary>
         public int LineBreakThreshold
@@ -150,7 +150,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a value indicating the output mode:
+        /// Returns or sets a value indicating the output mode:
         /// SingleLine (default) - output all code on a single line;
         /// MultipleLines - break the output into multiple lines to be more human-readable;
         /// SingleLine mode may still result in multiple lines if the LineBreakThreshold is set to a small enough value.
@@ -162,7 +162,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a boolean value indicting whether to add a semicolon at the end of the parsed code (true) or not (false, default)
+        /// Returns or sets a boolean value indicting whether to add a semicolon at the end of the parsed code (true) or not (false, default)
         /// </summary>
         public bool TermSemicolons
         {
@@ -171,7 +171,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a long integer value containing kill switch flags for each individual mod to the parsed code tree. Allows for
+        /// Returns or sets a long integer value containing kill switch flags for each individual mod to the parsed code tree. Allows for
         /// callers to turn off specific modifications if desired. Default is 0, meaning no kill switches are set.
         /// </summary>
         public long KillSwitch
@@ -181,7 +181,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets an appropriate line-terminator string given the output mode
+        /// Returns an appropriate line-terminator string given the output mode
         /// </summary>
         public string LineTerminator
         {
@@ -225,16 +225,16 @@ namespace Microsoft.Ajax.Utilities
         #region IgnoreErrors list
 
         /// <summary>
-        /// Gets a collection of errors to ignore
+        /// Returns a collection of errors to ignore
         /// </summary>
         public ICollection<string> IgnoreErrorCollection { get; private set; }
 
-        /// <summary>
-        /// Set the collection of errors to ignore
-        /// </summary>
-        /// <param name="definedNames">collection of error code strings</param>
-        /// <returns>number of error codes successfully added to the collection</returns>
-        public int SetIgnoreErrors(IEnumerable<string> ignoreErrors)
+		/// <summary>
+		/// Set the collection of errors to ignore
+		/// </summary>
+		/// <param name="ignoreErrors">collection of error code strings</param>
+		/// <returns>number of error codes successfully added to the collection</returns>
+		public int SetIgnoreErrors(IEnumerable<string> ignoreErrors)
         {
             IgnoreErrorCollection.Clear();
             if (ignoreErrors != null)
@@ -450,12 +450,12 @@ namespace Microsoft.Ajax.Utilities
         #region ReplacementTokens
 
         /// <summary>
-        /// Gets the mapping of replacement token to value
+        /// Returns the mapping of replacement token to value
         /// </summary>
         public IDictionary<string, string> ReplacementTokens { get; private set; }
 
         /// <summary>
-        /// Gets the mapping of replacement token fallback class to replacement value
+        /// Returns the mapping of replacement token fallback class to replacement value
         /// </summary>
         public IDictionary<string, string> ReplacementFallbacks { get; private set; }
 

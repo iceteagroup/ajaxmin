@@ -59,6 +59,7 @@ namespace Microsoft.Ajax.Utilities
                 case JSToken.Get: return "get";
                 case JSToken.Set: return "set";
                 case JSToken.Super: return "super";
+                case JSToken.Of: return "of";
 
                 // what about EcmaScript 6? Does this become a reserved word?
                 case JSToken.Module: return "module";
@@ -71,8 +72,11 @@ namespace Microsoft.Ajax.Utilities
                 case JSToken.Private: return "private";
                 case JSToken.Protected: return "protected";
                 case JSToken.Public: return "public";
+                case JSToken.Async: return "async";
+                case JSToken.Await: return "await";
                 case JSToken.Static: return "static";
                 case JSToken.Yield: return "yield";
+                case JSToken.Delete: return "delete";
 
                 // apparently never allowed for Chrome, so we want to treat it
                 // differently, too
@@ -124,6 +128,7 @@ namespace Microsoft.Ajax.Utilities
         {
             JSKeyword[] keywords = new JSKeyword[26];
             // a
+            keywords['a' - 'a'] = new JSKeyword(JSToken.Async, "async", new JSKeyword(JSToken.Await, "await"));
             // b
             keywords['b' - 'a'] = new JSKeyword(JSToken.Break, "break");
             // c
@@ -164,6 +169,8 @@ namespace Microsoft.Ajax.Utilities
             keywords['n' - 'a'] = new JSKeyword(JSToken.New, "new",
                 new JSKeyword(JSToken.Null, "null",
                     new JSKeyword(JSToken.Native, "native")));
+            // o
+            keywords['o' - 'a'] = new JSKeyword(JSToken.Of, "of");
             // p
             keywords['p' - 'a'] = new JSKeyword(JSToken.Public, "public",
                 new JSKeyword(JSToken.Package, "package",

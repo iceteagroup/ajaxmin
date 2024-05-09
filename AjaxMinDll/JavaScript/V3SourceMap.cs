@@ -70,7 +70,7 @@ namespace Microsoft.Ajax.Utilities
         #endregion
 
         /// <summary>
-        /// Gets or sets an optional source root URI that will be added to the map object as the sourceRoot property if set
+        /// Returns or sets an optional source root URI that will be added to the map object as the sourceRoot property if set
         /// </summary>
         public string SourceRoot
         {
@@ -79,7 +79,7 @@ namespace Microsoft.Ajax.Utilities
         }
 
         /// <summary>
-        /// Gets or sets a flag indicating whether or not to prepend the map file with an XSSI (cross-site script injection) protection string
+        /// Returns or sets a flag indicating whether or not to prepend the map file with an XSSI (cross-site script injection) protection string
         /// </summary>
         public bool SafeHeader
         {
@@ -129,13 +129,14 @@ namespace Microsoft.Ajax.Utilities
             m_columnOffset = 0;
         }
 
-        #region ISourceMap implementation
+		#region ISourceMap implementation
 
-        /// <summary>
-        /// Called when we start a new minified output file
-        /// </summary>
-        /// <param name="sourcePath">output file path</param>
-        public void StartPackage(string sourcePath, string mapPath)
+		/// <summary>
+		/// Called when we start a new minified output file
+		/// </summary>
+		/// <param name="sourcePath">source file path</param>
+		/// <param name="mapPath">output file path</param>
+		public void StartPackage(string sourcePath, string mapPath)
         {
             m_minifiedPath = sourcePath;
             m_mapPath = mapPath;
