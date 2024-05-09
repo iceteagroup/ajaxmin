@@ -1539,11 +1539,11 @@ namespace Microsoft.Ajax.Utilities
                 // an empty true-block. flag a low-sev warning
                 m_currentToken.HandleError(JSError.SuspectSemicolon);
             }
-            else if (m_currentToken.IsNot(JSToken.LeftCurly))
-            {
-                // if the statements aren't withing curly-braces, throw a possible error
-                ReportError(JSError.StatementBlockExpected, CurrentPositionContext);
-            }
+            //else if (m_currentToken.IsNot(JSToken.LeftCurly))
+            //{
+            //    // if the statements aren't withing curly-braces, throw a possible error
+            //    ReportError(JSError.StatementBlockExpected, CurrentPositionContext);
+            //}
 
             // parse a Statement, not a SourceElement
             // and ignore any important comments that spring up right here.
@@ -1563,11 +1563,11 @@ namespace Microsoft.Ajax.Utilities
                     // again, an empty else-block is kinda weird.
                     m_currentToken.HandleError(JSError.SuspectSemicolon);
                 }
-                else if (m_currentToken.IsNot(JSToken.LeftCurly) && m_currentToken.IsNot(JSToken.If))
-                {
-                    // if the statements aren't withing curly-braces (or start another if-statement), throw a possible error
-                    ReportError(JSError.StatementBlockExpected, CurrentPositionContext);
-                }
+                //else if (m_currentToken.IsNot(JSToken.LeftCurly) && m_currentToken.IsNot(JSToken.If))
+                //{
+                //    // if the statements aren't withing curly-braces (or start another if-statement), throw a possible error
+                //    ReportError(JSError.StatementBlockExpected, CurrentPositionContext);
+                //}
 
                 // parse a Statement, not a SourceElement
                 // and ignore any important comments that spring up right here.
@@ -1734,11 +1734,11 @@ namespace Microsoft.Ajax.Utilities
                 ReportError(JSError.NoRightParenthesis);
             }
 
-            // if the statements aren't withing curly-braces, throw a possible error
-            if (m_currentToken.IsNot(JSToken.LeftCurly))
-            {
-                ReportError(JSError.StatementBlockExpected, CurrentPositionContext);
-            }
+            //// if the statements aren't withing curly-braces, throw a possible error
+            //if (m_currentToken.IsNot(JSToken.LeftCurly))
+            //{
+            //    ReportError(JSError.StatementBlockExpected, CurrentPositionContext);
+            //}
 
             // parse a Statement, not a SourceElement
             // and ignore any important comments that spring up right here.
@@ -4741,7 +4741,7 @@ namespace Microsoft.Ajax.Utilities
             // peek at the NEXT token so we can check if we have name followed by ':'
             var nextToken = PeekToken();
             Context propertyContext = m_currentToken.Clone();
-            if (nextToken == JSToken.Colon)
+            if (nextToken == JSToken.Colon || (m_currentToken.Is(JSToken.LeftBracket) && nextToken == JSToken.Identifier))
             {
                 // regular field name followed by a colon
                 field = ParseObjectLiteralFieldName();
@@ -4849,6 +4849,14 @@ namespace Microsoft.Ajax.Utilities
             ObjectLiteralField field = null;
             switch (m_currentToken.Token)
             {
+                case JSToken.LeftBracket:
+                    GetNextToken();
+                    field = new ObjectLiteralField(ParseExpressionStatement(true), PrimitiveType.Other, m_currentToken.Clone())
+                    {
+                        IsIdentifier = true
+                    };
+                    break;
+
                 case JSToken.Identifier:
                 case JSToken.Get:
                 case JSToken.Set:

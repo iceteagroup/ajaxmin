@@ -1189,6 +1189,12 @@ namespace Microsoft.Ajax.Utilities
                             // this is a token value, and we are replacing tokens.
                             Output(GetSyntacticReplacementToken(match));
                         }
+                        else if (node.Value is Member)
+                        {
+                            Output('[');
+                            Visit((Member)node.Value);
+                            Output(']');
+                        }
                         else
                         {
                             // not replacing tokens; just output the value as-is
